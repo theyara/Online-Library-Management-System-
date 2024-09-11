@@ -1,0 +1,71 @@
+{% extends "index.html" %}
+{% load static %}
+{% block content%}
+{% for book in books %}
+<div class="card" style="width: 18rem; display: inline-block; margin: 100px; text-align: center;margin-top: 170px; "  >
+  <img src="{% static 'images/'|add:book.image %}" class="card-img-top" alt="{{book.image}}" width="300px" height="300px">
+  <div class="card-body" style="text-align: center">
+    <h5 class="card-title">{{book.name}}</h5>
+    <h6 class="card-text">Book by:{{book.auther}}</h6>
+    <p class="card-text" style="font-size: small">{{book.description}}</p>
+    <a href="#" class="btn btn-primary">Borrow Book</a>
+  </div>
+</div>
+
+<div class="card" style="width: 18rem;  display: inline-block; margin: 100px; text-align: center; margin-top: 170px;"  >
+  <img src="{% static 'images/'|add:book.image %}" class="card-img-top" alt="..." width="300px" height="300px">
+  <div class="card-body" style="text-align: center">
+    <h5 class="card-title">{{book.name}}</h5>
+    <h6 class="card-text">Book by:{{book.auther}}</h6>
+    <p class="card-text" style="font-size: small">{{book.description}}</p>
+    <a href="#" class="btn btn-primary">Borrow Book</a>
+  </div>
+</div>
+<div class="card" style="width: 18rem;  display: inline-block; margin: 100px; text-align: center; margin-top: 170px;"  >
+  <img src="{% static 'images/'|add:book.image %}" class="card-img-top" alt="..." width="290px" height="290px">
+  <div class="card-body" style="text-align: center">
+    <h5 class="card-title">{{book.name}}</h5>
+    <h6 class="card-text">Book by:{{book.auther}}</h6>
+    <p class="card-text" style="font-size: small">{{book.description}}</p>
+    <a href="#" class="btn btn-primary">Borrow Book</a>
+  </div>
+</div>
+<div class="card" style="width: 18rem;  display: inline-block; margin: 100px; text-align: center; margin-top: 170px;"  >
+  <img src="{% static 'images/'|add:book.image %}" class="card-img-top" alt="..." width="300px" height="300px">
+  <div class="card-body" style="text-align: center">
+    <h5 class="card-title">{{book.name}}</h5>
+    <h6 class="card-text">Book by:{{book.auther}}</h6>
+    <p class="card-text" style="font-size: small">{{book.description}}</p>
+    <a href="#" class="btn btn-primary">Borrow Book</a>
+  </div>
+</div>
+
+<div class="card" style="width: 18rem;  display: inline-block; margin: 100px; text-align: center; margin-top: 170px;"  >
+  <img src="{% static 'images/'|add:book.image %}" class="card-img-top" alt="..." width="300px" height="300px">
+  <div class="card-body" style="text-align: center">
+    <h5 class="card-title">{{book.name}}</h5>
+    <h6 class="card-text">Book by:{{book.auther}}</h6>
+    <p class="card-text" style="font-size: small">{{book.description}}</p>
+    <a href="#" class="btn btn-primary">Borrow Book</a>
+  </div>
+</div>
+<div class="card" style="width: 18rem;  display: inline-block; margin: 100px; text-align: center; margin-top: 170px;"  >
+  <img src="{% static 'images/'|add:book.image %}" class="card-img-top" alt="..." width="290px" height="290px">
+  <div class="card-body" style="text-align: center">
+    <h5 class="card-title">{{book.name}}</h5>
+    <h6 class="card-text">Book by:{{book.auther}}</h6>
+    <p class="card-text" style="font-size: small">{{book.description}}</p>
+    <a href="#" class="btn btn-primary">Borrow Book</a>
+  </div>
+</div>
+<div class="card" style="width: 18rem;  display: inline-block; margin: 100px; text-align: center; margin-top: 170px;"  >
+  <img src="{% static 'images/'|add:book.image %}" class="card-img-top" alt="..." width="300px" height="300px">
+  <div class="card-body" style="text-align: center">
+    <h5 class="card-title">{{book.name}}</h5>
+    <h6 class="card-text">Book by:{{book.auther}}</h6>
+    <p class="card-text" style="font-size: small">{{book.description}}</p>
+    <a href="#" class="btn btn-primary">Borrow Book</a>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}

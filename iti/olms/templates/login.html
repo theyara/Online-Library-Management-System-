@@ -1,10 +1,27 @@
 {% extends "index.html" %}
+{% block content%}
+<center>
+   <h2 class="h2 section-title has-underline" style="margin-top: 170px;">
+            Log In
+            <span class="span has-before"></span>
+          </h2>
+    <form method="POST" style="margin: 50px; background-color: var(--seashell); width: 700px; height: 500px; border-radius: 25px;">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" style="border-radius:25px ;background-color: white; width: 300px; height: 50px;"><br><br>
 
-{% block content %}
-<h2>Login</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-</form>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" style="border-radius:25px ;background-color: white; width: 300px; height: 50px;"><br><br>
+
+        <label >Select Role:</label><br>
+        <input type="radio" id="admin" name="role" value="admin">
+        <label for="admin">Admin</label>
+        <input type="radio" id="student" name="role" value="student" checked>
+        <label for="student">Student</label><br><br>
+
+        <a href="#" class="btn btn-primary" style="width: 150px; height: 50px; border-radius: 25px"> Register </a>
+         {% if error %}
+            <p style="color:red;">{{ error }}</p>
+        {% endif %}
+    </form></center>
 {% endblock %}

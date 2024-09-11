@@ -1,0 +1,30 @@
+{% extends "index.html" %}
+{% block content%}
+<center>
+   <h2 class="h2 section-title has-underline" style="margin-top: 170px;">
+            Student Registration
+            <span class="span has-before"></span>
+          </h2>
+    <form method="POST" style="margin: 50px; background-color: var(--seashell); width: 700px; height: 750px; border-radius: 25px;">
+        {% csrf_token %}
+        <label for="student_name">Student Name:</label>
+        <input type="text" id="student_name" name="student_name" style="border-radius:25px ;background-color: white; width: 300px; height: 50px;"><br><br>
+
+        <label for="student_email">Email:</label>
+        <input type="email" id="student_email" name="student_email" style="border-radius:25px ;background-color: white; width: 300px; height: 50px;"><br><br>
+
+        <label for="student_age">Age:</label>
+        <input type="number" id="student_age" name="student_age" style=" border-radius:25px ;background-color: white; width: 300px; height: 50px;"><br><br>
+
+        <label for="student_password">Password:</label>
+        <input type="password" id="student_password" name="student_password" style="border-radius:25px ;background-color: white; width: 300px; height: 50px;"><br><br>
+
+        <label for="confirm_password">Confirm password:</label>
+        <input type="password" id="confirm_password" name="confirm_password" style="border-radius:25px ;background-color: white; width: 300px; height: 50px;"><br><br>
+
+        <a href="#" class="btn btn-primary" style="width: 150px; height: 50px; border-radius: 25px"> Register </a>
+         {% if error %}
+            <p style="color:red;">{{ error }}</p>
+        {% endif %}
+    </form></center>
+{% endblock %}
