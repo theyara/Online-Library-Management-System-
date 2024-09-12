@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib import messages
@@ -10,7 +11,7 @@ from django.contrib.auth.models import User
 
 class AccountDetailView(DetailView):
     model = User
-    template_name = 'apanel/admin_dashboard.html'
+    template_name = 'apanel/a_dashboard.html'
 
 
 
@@ -21,7 +22,7 @@ def admin_login(request):
             user = form.get_user()
             if Admin.objects.filter(user=user).exists():
                 login(request, user)
-                return redirect('admin_dashboard')
+                return redirect('a_dashboard')
             else:
                 messages.error(request, 'You are not an admin.')
         else:
@@ -30,7 +31,9 @@ def admin_login(request):
         form = AdminLoginForm()
     return render(request, 'accounts/admin_login.html', {'form': form})
 
-
+@login_required
+def a_dashboard(request):
+    return render(request, 'a_dashboard.html')
 def student_login(request):
     if request.method == 'POST':
         form = StudentLoginForm(request, data=request.POST)

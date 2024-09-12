@@ -1,7 +1,8 @@
 from django.urls import path , include
-from .views import AccountDetailView
+from .views import AccountDetailView , admin_login
 
 urlpatterns = [
     path('',include('django.contrib.auth.urls')),
-    path('dashboard/<int:pk>', AccountDetailView.as_view, name='admin_dashboard'),
+    path('admin/login', admin_login, name='admin_login'),
+    path('dashboard/<int:pk>', AccountDetailView.as_view, name='a_dashboard'),
 ]

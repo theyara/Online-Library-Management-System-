@@ -1,8 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm
 from django.contrib import messages
+from .models import Book
+from .forms import BookForm
 
 
 def index(request):
@@ -25,6 +27,48 @@ def books(request):
          "image": "img4 (3).jpg"},
     ]
     return render(request, 'books.html', {'books': books})
+
+
+def view_all_books(request):
+    books = Book.objects.all()
+    return render(request, "books/all_books.html", {"books": books})
+
+
+def delete_book(request, id):
+    deleted_book = get_object_or_404(Book, id=id)
+    deleted_book.delete()
+    url = reverse("books.all_books")
+    return redirect(url)
+
+
+def Update(request, id):
+    book = get_object_or_404(Book, id=id)
+    form = BookForm(instance=book)
+    if request.method == 'POST':
+        form = BookForm(request.POST, request.FILES, instance=book)
+        if form.is_valid():
+            book = form.save()
+            url = reverse('books.all_books')
+            return redirect(url)
+
+    return render(request, 'books/update.html', {'form': form})
+
+
+def add_new_book(request):
+    form = BookForm()
+    if request.method == "POST":
+        form = BookForm(request.POST, request.FILES)
+        if form.is_valid():
+            print(request.POST)
+            new_book = Book()
+            new_book.name = request.POST["name"]
+            new_book.author = request.POST["author"]
+            new_book.published_date = request.POST["published_date"]
+            new_book.image = request.FILES["image"]
+            new_book.save()
+            url = reverse("books.all_books")
+            return redirect(url)
+    return render(request, 'books/add_new_book.html', {"form": form})
 
 
 def login_view(request):
@@ -54,10 +98,6 @@ def register_view(request):
     else:
         form = CustomUserCreationForm()
     return render(request, 'register.html', {'form': form})
-
-
-
-
 
 
 @login_required

@@ -79,8 +79,12 @@ WSGI_APPLICATION = 'olms.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'project',
+        'USER': 'postgres',
+        'PASSWORD': 'yara11',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
