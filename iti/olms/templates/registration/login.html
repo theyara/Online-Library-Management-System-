@@ -1,0 +1,63 @@
+{% extends "index.html" %}
+{% load static %}
+{% block content%}
+
+ <section class="section achievement" id="achievements" aria-label="achievement" style="margin-top: 170px">
+        <div class="container">
+
+          <p class="section-subtitle">Log In</p>
+
+          <h2 class="h2 section-title has-underline">
+            Admin & Student Login
+            <span class="span has-before"></span>
+          </h2>
+
+          <ul class="grid-list">
+
+            <li>
+
+              <div class="achievement-card" onclick="location.href='{% url 'admin_login' %}'">
+
+                <figure class="card-banner img-holder" style="--width: 450; --height: 300;">
+                  <img src="/static/images/admin.jpg" width="450" height="300" loading="lazy" alt="Admin"
+                    class="img-cover">
+                </figure>
+
+                <div class="card-content">
+
+
+                  <h3 class="h3 card-title">Admin</h3>
+
+                  <p class="card-text">
+                    Login as admin
+                  </p>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="achievement-card" onclick="location.href='{% url 'student_login' %}'">
+
+                <figure class="card-banner img-holder" style="--width: 450; --height: 300;">
+                  <img src="/static/images/student.jpg" width="450" height="300" loading="lazy" alt="Student"
+                    class="img-cover">
+                </figure>
+
+                <div class="card-content">
+
+                  <h3 class="h3 card-title">Student</h3>
+
+                  <p class="card-text">
+                    Login as student
+                  </p>
+
+                </div>
+
+              </div>
+            </li>
+          </ul>
+        </div>
+ </section>
+{% endblock %}

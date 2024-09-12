@@ -1,10 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm
-from django.contrib.auth.models import User
-from django.contrib.auth.hashers import make_password
 from django.contrib import messages
 
 
@@ -59,35 +56,8 @@ def register_view(request):
     return render(request, 'register.html', {'form': form})
 
 
-def register_student(request):
-    if request.method == 'POST':
-        student_name = request.POST['student_name']
-        student_email = request.POST['student_email']
-        student_password = request.POST['student_password']
-        confirm_password = request.POST['confirm_password']
-        if student_password == confirm_password:
-            user = User.objects.create(username=student_name, email=student_email,
-                                       password=make_password(student_password))
-            user.save()
-            return redirect('register_success')
-        else:
-            return render(request, 'register_student.html', {'error': 'Passwords do not match'})
-
-    return render(request, 'register_student.html')
 
 
-def register_admin(request):
-    if request.method == 'POST':
-        admin_name = request.POST['admin_name']
-        admin_email = request.POST['admin_email']
-        admin_password = request.POST['admin_password']
-
-        user = User.objects.create(username=admin_name, email=admin_email, password=make_password(admin_password))
-        user.save()
-
-        return redirect('register_success')
-
-    return render(request, 'register_admin.html')
 
 
 @login_required
@@ -103,7 +73,6 @@ def profile_view(request):
 
 @login_required
 def history_view(request):
-    # Assuming you have a model for keeping history
     return render(request, 'history.html')
 
 # Create your views here.

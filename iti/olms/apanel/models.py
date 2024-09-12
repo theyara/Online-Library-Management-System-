@@ -1,13 +1,11 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
 
 
 class Admin(models.Model):
-    admin_name = models.OneToOneField(User, on_delete=models.CASCADE)
-    admin_email = models.CharField(max_length=100)
-    admin_password = models.CharField(max_length=100)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.admin_name
+        return self.user.username
 
 # Create your models here.

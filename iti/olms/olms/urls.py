@@ -22,4 +22,5 @@ urlpatterns = [
     path('library/', include('library.urls')),
     path('apanel/', include('apanel.urls')),
     path('spanel/', include('spanel.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]

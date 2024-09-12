@@ -3,11 +3,11 @@ from django.contrib.auth.models import User
 
 
 class AdminRegistrationForm(forms.ModelForm):
-    admin_password = forms.CharField(widget=forms.PasswordInput, label="admin_password")
+    password = forms.CharField(widget=forms.PasswordInput, label="password")
 
     class Meta:
         model = User
-        fields = ['admin_name', 'admin_email']
+        fields = ['username', 'email', 'password']
 
     def clean(self):
         cleaned_data = super().clean()
