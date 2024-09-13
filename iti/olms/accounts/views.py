@@ -1,60 +1,82 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 
+def general_login(request):
+    return render(request, 'registration/login.html')
 
-def general_login_register(request):
-    # Handle login and registration for both student and admin
+
+def general_register(request):
+    return render(request, 'register.html')
+
+
+def register_admin(request):
     if request.method == 'POST':
-        if 'login' in request.POST:
-            # Login process
-            username = request.POST.get('username')
-            password = request.POST.get('password')
-            user_type = request.POST.get('user_type')  # Check if the user is admin or student
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                if user_type == 'admin' and user.is_staff:
-                    return redirect('admin_dashboard')
-                elif user_type == 'student' and not user.is_staff:
-                    return redirect('student_dashboard')
-                else:
-                    # Invalid user type (admin/student mismatch)
-                    return render(request, 'accounts/general_login_register.html', {'error': 'Invalid user type'})
-            else:
-                return render(request, 'accounts/general_login_register.html', {'error': 'Invalid credentials'})
-        elif 'register' in request.POST:
-            # Registration process
-            form = UserCreationForm(request.POST)
-            user_type = request.POST.get('user_type')
-            if form.is_valid():
-                user = form.save(commit=False)
-                if user_type == 'admin':
-                    user.is_staff = True  # Make the user an admin
-                user.save()
-                return redirect('general_login_register')
-            else:
-                return render(request, 'accounts/general_login_register.html', {'form': form, 'error': 'Registration failed'})
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.is_staff = True
+            user.save()
+            return redirect('login_admin')
     else:
         form = UserCreationForm()
+    return render(request, 'register_admin.html', {'form': form})
 
-    return render(request, 'accounts/general_login_register.html', {'form': form})
 
+def register_student(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login_student')
+    else:
+        form = UserCreationForm()
+    return render(request, 'register_student.html', {'form': form})
+
+
+def login_admin(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None and user.is_staff:
+            login(request, user)
+            return redirect('admin_dashboard')
+        else:
+            messages.error(request, 'Invalid username or password or unauthorized access.')
+    return render(request, 'accounts/admin_login.html')
+
+
+def login_student(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None and not user.is_staff:
+            login(request, user)
+            return redirect('student_dashboard')
+        else:
+            messages.error(request, 'Invalid username or password or unauthorized access.')
+    return render(request, 'accounts/student_login.html')
 
 
 @login_required
 def admin_dashboard(request):
     if request.user.is_staff:
         return render(request, 'a_dashboard.html')
-    else:
-        return redirect('accounts/general_login_register')  # Redirect if not admin
+    return redirect('general_login')
+
 
 @login_required
 def student_dashboard(request):
     if not request.user.is_staff:
         return render(request, 'student_dashboard.html')
-    else:
-        return redirect('accounts/general_login_register')  # Redirect if not student
+    return redirect('general_login')
+
+
+def custom_logout(request):
+    logout(request)
+    return redirect('general_login')
