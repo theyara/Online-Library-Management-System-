@@ -1,10 +1,83 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import CustomUserCreationForm
-from django.contrib import messages
-from .models import Book
+from .models import Book, BorrowRecord,S
 from .forms import BookForm
+from django.http import HttpResponseNotFound
+from .forms import StudentProfileForm, BorrowBookForm
+
+
+def view_all_bookss(request):
+    books = Book.objects.all()
+    return render(request, "indexs.html", {"books": books})
+
+
+def view_book_details(request, id):
+    book_details = get_object_or_404(Book, id=id)
+    return render(request, "details.html", {"book": book_details})
+
+
+def borrow_book(request):
+    if request.method == 'POST':
+        form = BorrowBookForm(request.POST)
+        if form.is_valid():
+            book_name = form.cleaned_data['book'].name
+            try:
+                # Ensure the book exists
+                book = Book.objects.get(name=book_name)
+            except Book.DoesNotExist:
+                form.add_error(None, 'The selected book does not exist.')
+                return render(request, 'borrow.html', {'form': form})
+
+            try:
+                # Ensure the student record exists for the current user
+                student = S.objects.get(user=request.user)
+            except S.DoesNotExist:
+                form.add_error(None, 'Student record not found.')
+                return render(request, 'borrow.html', {'form': form})
+
+            if book.available:
+                # Create the BorrowRecord entry
+                BorrowRecord.objects.create(student=student, book=book)
+                book.available = False
+                book.save()
+                return redirect('view_all_bookss')  # Redirect to a success page or message
+            else:
+                form.add_error(None, 'This book is not available for borrowing.')
+
+    else:
+        form = BorrowBookForm()
+
+    return render(request, 'borrow.html', {'form': form})
+
+
+@login_required
+def student_profile(request):
+    try:
+        student = S.objects.get(user=request.user)
+    except S.DoesNotExist:
+        return HttpResponseNotFound('Student profile does not exist.')
+
+    borrow_records = BorrowRecord.objects.filter(student=student)
+
+    return render(request, 'student_profile.html', {
+        'student': student,
+        'borrow_records': borrow_records
+    })
+
+
+@login_required
+def update_student_profile(request):
+    student = S.objects.get(user=request.user)
+
+    if request.method == 'POST':
+        form = StudentProfileForm(request.POST, instance=student)
+        if form.is_valid():
+            form.save()
+            return redirect('student_profile')
+    else:
+        form = StudentProfileForm(instance=student)
+
+    return render(request, 'update_student_profile.html', {'form': form})
 
 
 def index(request):
@@ -73,30 +146,5 @@ def add_new_book(request):
 
 
 
-def register_view(request):
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('login')
-    else:
-        form = CustomUserCreationForm()
-    return render(request, 'register.html', {'form': form})
-
-
-@login_required
-def logout_view(request):
-    logout(request)
-    return redirect('home')
-
-
-@login_required
-def profile_view(request):
-    return render(request, 'profile.html')
-
-
-@login_required
-def history_view(request):
-    return render(request, 'history.html')
 
 # Create your views here.

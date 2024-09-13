@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 
 class Student(models.Model):
-    student_name = models.OneToOneField(User, on_delete=models.CASCADE)
+    student_name = models.CharField( max_length=100)
     student_email = models.CharField(max_length=100)
     student_password = models.CharField(max_length=100)
     confirm_password = models.CharField(max_length=100)

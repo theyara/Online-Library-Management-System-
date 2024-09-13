@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import Book,Category
+from .models import Book,Category , S
 
 
 admin.site.register(Book)
 admin.site.register(Category)
-
+admin.site.register(S)
 
 
 # Register your models here.

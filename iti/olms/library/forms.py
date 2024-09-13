@@ -2,6 +2,30 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Book, Category
+from .models import S,BorrowRecord
+
+
+class BorrowBookForm(forms.ModelForm):
+    book = forms.ModelChoiceField(
+        queryset=Book.objects.all(),
+        to_field_name='name',  # Use book name for selection
+        label='Select Book'
+    )
+
+    class Meta:
+        model = BorrowRecord
+        fields = ['book']
+
+
+class StudentProfileForm(forms.ModelForm):
+    class Meta:
+        model = S
+        fields = ['student_id']
+
+class BorrowRecordForm(forms.ModelForm):
+    class Meta:
+        model = BorrowRecord
+        fields = []
 
 
 class BookForm(forms.ModelForm):

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Books</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <h1>Books</h1>
+    <div class="container">
+        <div class="row">
+            {% for book in books %}
+            <div class="col-md-4">
+                <div class="card mb-4" style="width: 18rem;">
+                    <img src="{{ book.image.url }}" class="card-img-top" alt="book_image" width="200px" height="200px">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ book.name }}</h5>
+                        <p class="card-text">{{ book.author }}</p>
+                        <a href="{% url 'details' book.id %}" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
+

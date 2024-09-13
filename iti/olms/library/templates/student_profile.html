@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Profile</title>
+</head>
+<body>
+    <h1>{{ student.user.username }}'s Profile</h1>
+    <p>Student ID: {{ student.student_id }}</p>
+
+    <h2>Borrowed Books</h2>
+    <ul>
+        {% for record in borrow_records %}
+            <li>
+                <strong>{{ record.book.title }}</strong> by {{ record.book.author }}
+                - Borrowed on {{ record.borrowed_at }}{% if record.returned_at %} - Returned on {{ record.returned_at }}{% endif %}
+            </li>
+        {% empty %}
+            <li>No borrowed books.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'update_student_profile' %}">Update Profile</a>
+</body>
+</html>
