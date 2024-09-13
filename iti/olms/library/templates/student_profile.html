@@ -1,24 +1,37 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Student Profile</title>
-</head>
-<body>
-    <h1>{{ student.user.username }}'s Profile</h1>
-    <p>Student ID: {{ student.student_id }}</p>
+{% extends "student_dashboard.html" %}
+{% block main%}
 
-    <h2>Borrowed Books</h2>
-    <ul>
+    <h1 class="h2 section-title has-underline" style="font-size: 25px; margin: 50px;margin-top: 20px; font-weight: bolder">{{ student.user }}'s Profile</h1>
+    <p style="font-size: medium;">Student ID: {{ student.student_id }}</p>
+
+    <h2 class="h2 section-title has-underline" style="font-size: 25px; margin: 50px;margin-top: 20px; font-weight: bolder">Borrowed Books</h2>
+        <center>
         {% for record in borrow_records %}
-            <li>
-                <strong>{{ record.book.title }}</strong> by {{ record.book.author }}
-                - Borrowed on {{ record.borrowed_at }}{% if record.returned_at %} - Returned on {{ record.returned_at }}{% endif %}
-            </li>
-        {% empty %}
-            <li>No borrowed books.</li>
-        {% endfor %}
-    </ul>
 
-    <a href="{% url 'update_student_profile' %}">Update Profile</a>
-</body>
-</html>
+        <table class="table table-success table-striped" style="border: 2px;border-radius: 20px;width: 70%;height: 20%;">
+            <thead>
+            <tr>
+              <th scope="col">Book Name</th>
+              <th scope="col">Author</th>
+              <th scope="col">Borrowed At</th>
+              <th scope="col">Returned on</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">{{ record.book.name }}</th>
+              <td>{{ record.book.author }}</td>
+              <td>{{ record.borrowed_at }}</td>
+              <td>{% if record.returned_at %}
+                  {{ record.returned_at }}
+                  {% endif %}</td>
+            </tr>
+          </tbody>
+        </table>
+        {% empty %}
+            <h1 class="h2 section-title has-underline" style="font-size: 25px; margin-top: 20px; font-weight: bolder">No borrowed books.</h1>
+        {% endfor %}
+        </center>
+
+    <a href="{% url 'update_student_profile' %}" class="btn btn-primary" style="width: 150px; height: 30px; border-radius: 25px; margin-top: 20px;background-color: hsl(357, 37%, 62%);font-size: 15px;padding: 5px;text-align: center;border: none;">Update Profile</a>
+{% endblock %}

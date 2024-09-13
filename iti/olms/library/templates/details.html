@@ -3,19 +3,19 @@
 
 {% block main %}
 
-          <h1 class="text-center"> Book Details </h1>
+          <h1 class="h2 section-title has-underline" style="font-size: 25px; margin: 50px;margin-top: 20px; font-weight: bolder"> Book Details </h1>
 
 
 
-  <div class="card" style="width: 18rem;">
+  <div class="card" style="width: 21rem;">
     
 
   <div class="card-body">
     <img src="{{book.image.url}} " class="card-img-top" alt="...">
     <h5 class="card-title">{{book.name}}</h5>
     <p class="card-text"> {{book.auther}} <br> {{book.category}}<br> {{book.published_date}}</p>
-    <a href="{% url 'borrow_book' %}" class="btn btn-primary">Borrow </a>
-    <a href="{% url 'index' %}" class="btn btn-primary">Back to All Books </a>
+    <a href="{% url 'borrow_book' %}" class="btn btn-primary" style="width: 150px; height: 30px; border-radius: 25px; margin-top: 20px;background-color: hsl(357, 37%, 62%);font-size: 15px;padding: 5px;text-align: center;border: none;">Borrow </a>
+    <a href="{% url 'index' %}" class="btn btn-primary" style="width: 150px; height: 30px; border-radius: 25px; margin-top: 20px;background-color: hsl(357, 37%, 62%);font-size: 15px;padding: 5px;text-align: center;border: none;">Back to All Books </a>
   </div>
 </div>
 

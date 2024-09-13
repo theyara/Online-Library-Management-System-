@@ -1,18 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Borrow Book</title>
-</head>
-<body>
-    <h1>Borrow a Book</h1>
-    <form method="post">
-        {% csrf_token %}
-        <h3>Login</h3>
-                {{ form.as_p }}
-        <label for="student_name">Name:</label>
-        <input type="text" name="student_name" required><br>
+{% extends "student_dashboard.html" %}
+{% block main%}
+    <h1 class="h2 section-title has-underline" style="font-size: 25px; margin: 50px;margin-top: 20px; font-weight: bolder">Borrow a Book</h1>
+    <center>
+    <form method="post" style="font-size: 20px; background-color:#495057; opacity: 80%;color: white;width: 50%;height: 50%; border-radius: 15px;padding-top:35px;  ">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <label for="student_name">Name:</label>
+            <input type="text" name="student_name" style="border-radius:25px ;background-color: white; width: 300px; height: 50px;" required><br>
 
-        <button type="submit">Borrow</button>
+            <button type="submit" style="width: 150px; height: 30px; border-radius: 25px; margin-top: 20px;background-color: hsl(357, 37%, 62%);font-size: 15px;padding: 5px;text-align: center;border: none; color: white">Borrow</button>
     </form>
-</body>
-</html>
+</center>
+{% endblock %}

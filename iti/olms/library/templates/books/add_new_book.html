@@ -1,62 +1,14 @@
-{% extends "index.html" %}
-{% load static  %}
-{% block nav  %}
- <header class="header" data-header>
-    <div class="container">
+{% extends "a_dashboard.html" %}
+{% block main  %}
 
-      <a href="#" class="logo">Bookish Dashboard</a>
-
-      <nav class="navbar" data-navbar>
-        <ul class="navbar-list">
-
-          <li class="navbar-item">
-            <a href="{% url 'books.all_books' %}" class="navbar-link" data-nav-link>All Books</a>
-          </li>
-
-          <li class="navbar-item">
-            <a href="{% url 'books.all_books' %}" class="navbar-link" data-nav-link>All Students</a>
-          </li>
-
-          <li class="navbar-item">
-            <a href="{% url 'search_student' %}" class="navbar-link" data-nav-link>Borrowed Books</a>
-          </li>
-
-          <li class="navbar-item">
-            <a href="{% url 'search_student' %}" class="navbar-link" data-nav-link>Search For Student</a>
-          </li>
-             <li class="navbar-item dropdown">
-                <a href="#" class="navbar-link dropdown" id="accountDropdown">Account</a>
-                <div class="dropdown-content" id="dropdownMenu">
-                  {% if user.is_authenticated %}
-                    <a href="">Hi, {{ user.username }}</a>
-                    <a href="{% url 'CustomPasswordChangeView' %}">Change Password</a>
-                    <a href="{% url 'logout' %}">Logout</a>
-                  {% else %}
-                    <a href="{% url 'login' %}">Login</a>
-                    <a href="{% url 'register' %}">Register</a>
-                  {% endif %}
-                </div>
-             </li>
-        </ul>
-      </nav>
-      <button class="nav-toggle-btn" aria-label="toggle menu" data-nav-toggler>
-        <ion-icon name="menu-outline" aria-hidden="true" class="open"></ion-icon>
-
-        <ion-icon name="close-outline" aria-hidden="true" class="close"></ion-icon>
-      </button>
-
-    </div>
-  </header>
-{% endblock  %}
-{% block content  %}
-
-    <h2 class="h2 section-title has-underline" style="margin-top: 170px">
+    <h2 class="h2 section-title has-underline" style="margin-top: 100px">
             Add New Book
             <span class="span has-before"></span>
           </h2>
-    <form method="post" enctype="multipart/form-data">
+<center>
+    <form method="post" enctype="multipart/form-data" style="font-size: 15px; background-color:#495057; opacity: 80%;color: white;width: 60%;height: 58%; border-radius: 10px;padding-top:35px; text-align: center  ">
         {% csrf_token %}
         {{form}}
-        <input type="submit" class="btn btn-success" value="Add New Book">
-    </form>
+        <input type="submit" class="btn btn-success" value="Add New Book"  style="width: 150px; height: 30px; border-radius: 25px; margin-top: 20px;background-color: hsl(357, 37%, 62%);font-size: 15px;padding: 5px;text-align: center;border: none; color: white;">
+    </form></center>
 {% endblock  %}

@@ -1,31 +1,28 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Student Details</title>
-</head>
-<body>
-    <h1>Student Details</h1>
-    <table border="1">
-        <thead>
+{% extends "a_dashboard.html" %}
+{% block main%}
+<h1 class="h2 section-title has-underline" style="font-size: 25px; margin: 50px;margin-top: 20px; font-weight: bolder">Users Details</h1>
+<center>
+ <table class="table table-success table-striped" style="border: 2px;border-radius: 20px;width: 70%;height: 20%;">
+            <thead>
             <tr>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Student ID</th>
+              <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Student ID</th>
             </tr>
-        </thead>
-        <tbody>
-            {% for student in students %}
+          </thead>
+          <tbody>
+          {% for student in students %}
             <tr>
-                <td>{{ student.name }}</td>
+              <td>{{ student.name }}</td>
                 <td>{{ student.email }}</td>
                 <td>{{ student.student_id }}</td>
             </tr>
-            {% empty %}
-            <tr>
-                <td colspan="5">No students found.</td>
-            </tr>
-            {% endfor %}
+
+        {% empty %}
+            <h1 class="h2 section-title has-underline" style="font-size: 25px; margin-top: 20px; font-weight: bolder">No users found.</h1>
+        {% endfor %}
         </tbody>
-    </table>
-</body>
-</html>
+        </table>
+        </center>
+{% endblock %}
+

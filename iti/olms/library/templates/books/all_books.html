@@ -1,66 +1,18 @@
-{% extends "index.html" %}
-{% block nav  %}
- <header class="header" data-header>
-    <div class="container">
+{% extends "a_dashboard.html" %}
+{% block main%}
 
-      <a href="#" class="logo">Bookish Dashboard</a>
-
-      <nav class="navbar" data-navbar>
-        <ul class="navbar-list">
-
-          <li class="navbar-item">
-            <a href="{% url 'books.all_books' %}" class="navbar-link" data-nav-link>All Books</a>
-          </li>
-
-          <li class="navbar-item">
-            <a href="{% url 'books.all_books' %}" class="navbar-link" data-nav-link>All Students</a>
-          </li>
-
-          <li class="navbar-item">
-            <a href="{% url 'search_student' %}" class="navbar-link" data-nav-link>Borrowed Books</a>
-          </li>
-
-          <li class="navbar-item">
-            <a href="{% url 'search_student' %}" class="navbar-link" data-nav-link>Search For Student</a>
-          </li>
-             <li class="navbar-item dropdown">
-                <a href="#" class="navbar-link dropdown" id="accountDropdown">Account</a>
-                <div class="dropdown-content" id="dropdownMenu">
-                  {% if user.is_authenticated %}
-                    <a href="">Hi, {{ user.username }}</a>
-                    <a href="{% url 'CustomPasswordChangeView' %}">Change Password</a>
-                    <a href="{% url 'logout' %}">Logout</a>
-                  {% else %}
-                    <a href="{% url 'login' %}">Login</a>
-                    <a href="{% url 'register' %}">Register</a>
-                  {% endif %}
-                </div>
-             </li>
-        </ul>
-      </nav>
-      <button class="nav-toggle-btn" aria-label="toggle menu" data-nav-toggler>
-        <ion-icon name="menu-outline" aria-hidden="true" class="open"></ion-icon>
-
-        <ion-icon name="close-outline" aria-hidden="true" class="close"></ion-icon>
-      </button>
-
-    </div>
-  </header>
-{% endblock  %}
-{% block content %}
-
-<a href="{% url 'books.add_new_book'  %}" class="btn btn-primary" style="width: 18rem; display: inline-block; margin: 50px; text-align: center;margin-top: 170px; ">Add New Book</a><br>
+<a href="{% url 'books.add_new_book'  %}" class="btn btn-primary" style="width: 200px; display: inline-block; margin: 50px; text-align: center;margin-top: 100px;font-size: 25px;font-weight: bolder;background-color: #495057;color: white; border: none; ">Add New Book</a><br>
 
 
    {% for book in books %}
 
-            <div class="card" style="width: 21rem;  display: inline-block; margin: 100px; text-align: center; "  >
+            <div class="card" style="width: 21rem;  display: inline-block; margin: 50px; text-align: center; "  >
               <img src="{{ book.image.url }}" class="card-img-top" alt="book_image" style="width: 200px; height: 200px;">
               <div class="card-body" style="text-align: center">
                 <h5 class="card-title">{{book.name}}</h5>
                 <h6 class="card-text">Book by:{{book.author}}</h6>
-                  <a href="{% url 'books.update' book.id %}" class="btn btn-primary" style="display: inline-block;width: 100px; height: 50px; border-radius: 25px;">Update</a>
-	             <a href="{% url 'books.delete' book.id %}" class="btn btn-danger" style="background-color: darkslategrey; color: white; display: inline-block;width: 100px; height: 50px; border-radius: 25px;margin-top: 10px;">Delete</a>
+                  <a href="{% url 'books.update' book.id %}" class="btn btn-primary" style="width: 150px; height: 30px; border-radius: 25px; margin-top: 20px;background-color: indianred;font-size: 15px;padding: 5px;text-align: center;border: none;">Update</a>
+	             <a href="{% url 'books.delete' book.id %}" class="btn btn-danger" style="width: 150px; height: 30px; border-radius: 25px; margin-top: 20px;background-color: #495057;font-size: 15px;padding: 5px;text-align: center;border: none;">Delete</a>
               </div>
             </div>
 

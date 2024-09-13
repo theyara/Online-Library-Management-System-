@@ -1,28 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>All Books</title>
+{% extends "student_dashboard.html" %}
+{% block main%}
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-    <h1>Books</h1>
+    <h1 class="h2 section-title has-underline" style="font-size: 25px; margin: 50px;margin-top: 20px; font-weight: bolder">Books</h1>
     <div class="container">
         <div class="row">
             {% for book in books %}
             <div class="col-md-4">
-                <div class="card mb-4" style="width: 18rem;">
+                <div class="card mb-4" style="width: 21rem;">
                     <img src="{{ book.image.url }}" class="card-img-top" alt="book_image" width="200px" height="200px">
                     <div class="card-body">
                         <h5 class="card-title">{{ book.name }}</h5>
                         <p class="card-text">{{ book.author }}</p>
-                        <a href="{% url 'details' book.id %}" class="btn btn-primary">View Details</a>
+                        <a href="{% url 'details' book.id %}" class="btn btn-primary" style="width: 150px; height: 30px; border-radius: 25px; margin-top: 20px;background-color: indianred;font-size: 15px;padding: 5px;text-align: center;border: none;">View Details</a>
                     </div>
                 </div>
             </div>
             {% endfor %}
         </div>
     </div>
-</body>
-</html>
+{% endblock %}
 

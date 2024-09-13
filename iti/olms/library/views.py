@@ -40,7 +40,8 @@ def borrow_book(request):
                 BorrowRecord.objects.create(student=student, book=book)
                 book.available = False
                 book.save()
-                return redirect('view_all_bookss')  # Redirect to a success page or message
+                url = reverse('indexs')
+                return redirect(url)  # Redirect to a success page or message
             else:
                 form.add_error(None, 'This book is not available for borrowing.')
 

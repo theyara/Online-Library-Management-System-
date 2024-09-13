@@ -1,23 +1,35 @@
 {% extends "a_dashboard.html" %}
 {% load static %}
 {% block main  %}
-
-    <h2 class="h2 section-title has-underline" style="margin-top: 170px">
+<center>
+    <h2 class="h2 section-title has-underline" style="margin-top: 100px">
             Search for Student by ID
-            <span class="span has-before"></span>
           </h2>
-    <form method="get">
+    <form method="get" style="font-size: 20px; background-color:#495057; opacity: 80%;color: white;width: 40%;height: 25%; border-radius: 10px;padding-top:35px;  ">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Search</button>
+        <button type="submit" style="width: 150px; height: 30px; border-radius: 25px; margin-top: 20px;background-color: hsl(357, 37%, 62%);font-size: 15px;padding: 5px;text-align: center;border: none; color: white;">Search</button>
     </form>
-
+   <h2 class="h2 section-title has-underline" style="margin-top: 30px">Student Details</h2>
     {% if student %}
-        <h2>Student Details</h2>
-        <p><strong>ID:</strong> {{ student.student_id }}</p>
-        <p><strong>Name:</strong> {{ student.name }}</p>
-        <p><strong>Email:</strong> {{ student.email }}</p>
+        <table class="table table-success table-striped" style="border: 2px;border-radius: 20px;width: 50%;height: 10%; margin: 10px;">
+            <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+                <th scope="col">Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td scope="row">{{ student.student_id }}</td>
+              <td>{{ student.name }}</td>
+                 <td>{{ student.email }}</td>
+            </tr>
+          </tbody>
+        </table>
     {% elif form.is_valid %}
-        <p>No student found with ID "{{ form.cleaned_data.student_id }}"</p>
+            <h1 class="h2 section-title has-underline" style="font-size: 25px; margin-top: 20px; font-weight: bolder">No student found with ID "{{ form.cleaned_data.student_id }}</h1>
     {% endif %}
+</center>
 {% endblock  %}
