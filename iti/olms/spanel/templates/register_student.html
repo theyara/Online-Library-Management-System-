@@ -22,7 +22,7 @@
         <label for="confirm_password">Confirm password:</label>
         <input type="password" id="confirm_password" name="confirm_password" style="border-radius:25px ;background-color: white; width: 300px; height: 50px;"><br><br>
 
-        <a href="#" class="btn btn-primary" style="width: 150px; height: 50px; border-radius: 25px"> Register </a>
+        <a href="{% url 'register_success' %}" class="btn btn-primary" style="width: 150px; height: 50px; border-radius: 25px"> Register </a>
          {% if error %}
             <p style="color:red;">{{ error }}</p>
         {% endif %}

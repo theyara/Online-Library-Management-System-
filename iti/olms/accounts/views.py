@@ -1,53 +1,60 @@
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django.contrib.auth import login
-from django.contrib import messages
-from .forms import AdminLoginForm, StudentLoginForm
-from spanel.models import Student
-from apanel.models import Admin
-from django.views.generic import DetailView
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
-
-
-class AccountDetailView(DetailView):
-    model = User
-    template_name = 'apanel/a_dashboard.html'
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 
 
 
-def admin_login(request):
+def general_login_register(request):
+    # Handle login and registration for both student and admin
     if request.method == 'POST':
-        form = AdminLoginForm(request, data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            if Admin.objects.filter(user=user).exists():
+        if 'login' in request.POST:
+            # Login process
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            user_type = request.POST.get('user_type')  # Check if the user is admin or student
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
                 login(request, user)
-                return redirect('a_dashboard')
+                if user_type == 'admin' and user.is_staff:
+                    return redirect('admin_dashboard')
+                elif user_type == 'student' and not user.is_staff:
+                    return redirect('student_dashboard')
+                else:
+                    # Invalid user type (admin/student mismatch)
+                    return render(request, 'accounts/general_login_register.html', {'error': 'Invalid user type'})
             else:
-                messages.error(request, 'You are not an admin.')
-        else:
-            messages.error(request, 'Invalid credentials.')
+                return render(request, 'accounts/general_login_register.html', {'error': 'Invalid credentials'})
+        elif 'register' in request.POST:
+            # Registration process
+            form = UserCreationForm(request.POST)
+            user_type = request.POST.get('user_type')
+            if form.is_valid():
+                user = form.save(commit=False)
+                if user_type == 'admin':
+                    user.is_staff = True  # Make the user an admin
+                user.save()
+                return redirect('general_login_register')
+            else:
+                return render(request, 'accounts/general_login_register.html', {'form': form, 'error': 'Registration failed'})
     else:
-        form = AdminLoginForm()
-    return render(request, 'accounts/admin_login.html', {'form': form})
+        form = UserCreationForm()
+
+    return render(request, 'accounts/general_login_register.html', {'form': form})
+
+
 
 @login_required
-def a_dashboard(request):
-    return render(request, 'a_dashboard.html')
-def student_login(request):
-    if request.method == 'POST':
-        form = StudentLoginForm(request, data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            if Student.objects.filter(user=user).exists():
-                login(request, user)
-                return redirect('student_dashboard')
-            else:
-                messages.error(request, 'You are not a student.')
-        else:
-            messages.error(request, 'Invalid credentials.')
+def admin_dashboard(request):
+    if request.user.is_staff:
+        return render(request, 'a_dashboard.html')
     else:
-        form = StudentLoginForm()
-    return render(request, 'accounts/student_login.html', {'form': form})
+        return redirect('accounts/general_login_register')  # Redirect if not admin
 
-# Create your views here.
+@login_required
+def student_dashboard(request):
+    if not request.user.is_staff:
+        return render(request, 'student_dashboard.html')
+    else:
+        return redirect('accounts/general_login_register')  # Redirect if not student

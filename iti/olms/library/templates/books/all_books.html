@@ -1,5 +1,4 @@
 {% extends "index.html" %}
-{% load static %}
 {% block nav  %}
  <header class="header" data-header>
     <div class="container">
@@ -50,18 +49,20 @@
 {% endblock  %}
 {% block content %}
 
-<a href="{% url 'books.add_new_book'  %}" class="btn btn-primary" style="width: 18rem; display: inline-block; margin: 100px; text-align: center;margin-top: 170px; ">Add New Book</a>
+<a href="{% url 'books.add_new_book'  %}" class="btn btn-primary" style="width: 18rem; display: inline-block; margin: 50px; text-align: center;margin-top: 170px; ">Add New Book</a><br>
 
 
-   {% for book in Book %}
-      <div class="card" style="width: 18rem;">
-  	<img src="{{book.image_url}}" class="card-img-top" alt="book_image">
-  	<div class="card-body">
-    	    <h5 class="card-title">{{book.name}}</h5>
-    	    <p class="card-text">Book by:{{book.author}}<br> {{book.description}} <br> {{book.category}}</p>
-    	    <a href="{% url 'books.update' book.id %}" class="btn btn-primary">Update</a>
-	    <a href="{% url 'books.delete' book.id %}" class="btn btn-danger">Delete/a>
- 	</div>
-      </div>
+   {% for book in books %}
+
+            <div class="card" style="width: 21rem;  display: inline-block; margin: 100px; text-align: center; "  >
+              <img src="{{ book.image.url }}" class="card-img-top" alt="book_image" style="width: 200px; height: 200px;">
+              <div class="card-body" style="text-align: center">
+                <h5 class="card-title">{{book.name}}</h5>
+                <h6 class="card-text">Book by:{{book.author}}</h6>
+                  <a href="{% url 'books.update' book.id %}" class="btn btn-primary" style="display: inline-block;width: 100px; height: 50px; border-radius: 25px;">Update</a>
+	             <a href="{% url 'books.delete' book.id %}" class="btn btn-danger" style="background-color: darkslategrey; color: white; display: inline-block;width: 100px; height: 50px; border-radius: 25px;margin-top: 10px;">Delete</a>
+              </div>
+            </div>
+
    {% endfor %}
 {%endblock%}

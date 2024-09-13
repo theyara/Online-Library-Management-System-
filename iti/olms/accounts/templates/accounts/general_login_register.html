@@ -1,0 +1,44 @@
+<!-- templates/general_login_register.html -->
+<h2>Login or Register</h2>
+
+<!-- Display any error messages -->
+{% if error %}
+<p style="color: red;">{{ error }}</p>
+{% endif %}
+
+<!-- Login Form -->
+<form method="post">
+    {% csrf_token %}
+    <h3>Login</h3>
+    <label for="username">Username:</label>
+    <input type="text" name="username" required><br>
+    <label for="password">Password:</label>
+    <input type="password" name="password" required><br>
+
+    <!-- User Type Selection for Login -->
+    <label for="user_type">I am a:</label>
+    <select name="user_type" required>
+        <option value="admin">Admin</option>
+        <option value="student">Student</option>
+    </select><br>
+
+    <button type="submit" name="login">Login</button>
+</form>
+
+<hr>
+
+<!-- Registration Form -->
+<form method="post">
+    {% csrf_token %}
+    <h3>Register</h3>
+    {{ form.as_p }}
+
+    <!-- User Type Selection for Registration -->
+    <label for="user_type">I am registering as:</label>
+    <select name="user_type" required>
+        <option value="admin">Admin</option>
+        <option value="student">Student</option>
+    </select><br>
+
+    <button type="submit" name="register">Register</button>
+</form>

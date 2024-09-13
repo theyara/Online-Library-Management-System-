@@ -5,7 +5,7 @@ class Book(models.Model):
     name = models.CharField(max_length=100)
     author = models.CharField(max_length=200)
     published_date = models.DateField()
-    image = models.ImageField(upload_to='static/images/', null=True, blank=True)
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
     category = models.ForeignKey('Category', on_delete=models.SET_NULL,
                                  related_name='Book', blank=True, null=True)
 

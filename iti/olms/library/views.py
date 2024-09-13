@@ -71,22 +71,6 @@ def add_new_book(request):
     return render(request, 'books/add_new_book.html', {"form": form})
 
 
-def login_view(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user_role = request.POST['role']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            if user_role == 'admin':
-                return redirect('admin_dashboard')
-            elif user_role == 'student':
-                return redirect('student_dashboard')
-        else:
-            messages.error(request, 'Invalid username or password')
-
-    return render(request, 'login.html')
 
 
 def register_view(request):

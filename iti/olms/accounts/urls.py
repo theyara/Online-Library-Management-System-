@@ -1,8 +1,10 @@
-from django.urls import path , include
-from .views import AccountDetailView , admin_login
+from django.urls import path
+from django.contrib.auth import views as auth_views
+from . import views
 
 urlpatterns = [
-    path('',include('django.contrib.auth.urls')),
-    path('admin/login', admin_login, name='admin_login'),
-    path('dashboard/<int:pk>', AccountDetailView.as_view, name='a_dashboard'),
+    path('login/', views.general_login_register, name='general_login_register'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('admin/dashboard/', views.admin_dashboard, name='admin_dashboard'),
+    path('student/dashboard/', views.student_dashboard, name='student_dashboard'),
 ]
