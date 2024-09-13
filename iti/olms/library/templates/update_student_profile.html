@@ -1,15 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Update Student Profile</title>
-</head>
-<body>
-    <h1>Update Profile</h1>
-    <form method="post">
+{% extends "student_dashboard.html" %}
+{% block main%}
+ <h2 class="h2 section-title has-underline" style="font-size: 25px; margin: 50px;margin-top: 20px; font-weight: bolder">
+            Update Profile
+ </h2>
+<center>
+    <form method="post"  style="font-size: 15px; background-color:#495057; opacity: 80%;color: white;width: 60%;height: 40%; border-radius: 10px;padding-top:35px; text-align: center; justify-content: center;  ">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Save Changes</button>
+        <button type="submit"  style="width: 150px; height: 30px; border-radius: 25px; margin-top: 20px;background-color: hsl(357, 37%, 62%);font-size: 15px;padding: 5px;text-align: center;border: none; color: white">Save Changes</button>
     </form>
-    <a href="{% url 'student_profile' %}">Back to Profile</a>
-</body>
-</html>
+    <a href="{% url 'student_profile' %}" style="width: 150px; height: 30px; border-radius: 25px; margin-top: 20px;background-color: hsl(357, 37%, 62%);font-size: 15px;padding: 5px;text-align: center;border: none;">Back to Profile</a></center>
+{% endblock %}
