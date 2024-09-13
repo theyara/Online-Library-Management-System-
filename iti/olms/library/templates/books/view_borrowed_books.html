@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Borrowed Books</title>
+</head>
+<body>
+    <h1>Borrowed Books</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Book Title</th>
+                <th>Author</th>
+                <th>Student Username</th>
+                <th>Student ID</th>
+                <th>Borrowed At</th>
+                <th>Returned At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in borrowed_books %}
+           <tr>
+                <td>{{ record.book.name }}</td>
+                <td>{{ record.book.author }}</td>
+                <td>{{ record.student.user }}</td>
+                <td>{{ record.student.student_id }}</td>
+                <td>{{ record.borrowed_at }}</td>
+                <td>{{ record.returned_at|default:"Not Returned Yet" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">No borrowed books found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

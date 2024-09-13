@@ -1,15 +1,29 @@
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect, get_object_or_404, reverse
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password
 from .forms import AdminRegistrationForm
 from .models import Admin
-from django.contrib.auth import authenticate, login
-from django.contrib import messages
-from .models import Student
 from .forms import StudentSearchForm
 from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView
 from django.urls import reverse_lazy
+from library.models import BorrowRecord
+from django.contrib.admin.views.decorators import staff_member_required
+from .models import Student
+
+@staff_member_required
+def view_students(request):
+    students = Student.objects.all()
+    return render(request, 'view_students.html', {'students': students})
+
+
+def view_borrowed_books(request):
+    borrowed_books = BorrowRecord.objects.select_related('book', 'student').all()
+    return render(request, 'books/view_borrowed_books.html', {'borrowed_books': borrowed_books})
+
+
+def view_all_users(request):
+    users = User.objects.all()  # Fetch all user accounts
+    return render(request, 'view_all_users.html', {'users': users})
 
 
 def search_student(request):
