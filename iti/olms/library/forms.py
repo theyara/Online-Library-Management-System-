@@ -2,7 +2,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Book, Category
-from .models import S,BorrowRecord
+from .models import BorrowRecord
+from  spanel.models import Student
 
 
 class BorrowBookForm(forms.ModelForm):
@@ -19,8 +20,8 @@ class BorrowBookForm(forms.ModelForm):
 
 class StudentProfileForm(forms.ModelForm):
     class Meta:
-        model = S
-        fields = ['student_id']
+        model = Student
+        fields = '__all__'
 
 class BorrowRecordForm(forms.ModelForm):
     class Meta:
