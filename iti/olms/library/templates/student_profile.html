@@ -6,6 +6,7 @@
 
     <h2 class="h2 section-title has-underline" style="font-size: 25px; margin: 50px;margin-top: 20px; font-weight: bolder">Borrowed Books</h2>
         <center>
+     {% if borrow_records %}
         {% for record in borrow_records %}
 
         <table class="table table-success table-striped" style="border: 2px;border-radius: 20px;width: 70%;height: 20%;">
@@ -31,6 +32,9 @@
         {% empty %}
             <h1 class="h2 section-title has-underline" style="font-size: 25px; margin-top: 20px; font-weight: bolder">No borrowed books.</h1>
         {% endfor %}
+      {% else %}
+            <p>No borrowed books found.</p>
+        {% endif %}
         </center>
 
     <a href="{% url 'update_student_profile' %}" class="btn btn-primary" style="width: 150px; height: 30px; border-radius: 25px; margin-top: 20px;background-color: hsl(357, 37%, 62%);font-size: 15px;padding: 5px;text-align: center;border: none;">Update Profile</a>

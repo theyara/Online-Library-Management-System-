@@ -7,7 +7,7 @@
     <form method="post"  style="font-size: 15px; background-color:#495057; opacity: 80%;color: white;width: 60%;height: 40%; border-radius: 10px;padding-top:35px; text-align: center; justify-content: center;  ">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit"  style="width: 150px; height: 30px; border-radius: 25px; margin-top: 20px;background-color: hsl(357, 37%, 62%);font-size: 15px;padding: 5px;text-align: center;border: none; color: white">Save Changes</button>
+      <a href="{% url 'logout' %}" ><button type="submit"  style="width: 150px; height: 30px; border-radius: 25px; margin-top: 20px;background-color: hsl(357, 37%, 62%);font-size: 15px;padding: 5px;text-align: center;border: none; color: white">Save Changes</button></a>
     </form>
     <a href="{% url 'student_profile' %}" style="width: 150px; height: 30px; border-radius: 25px; margin-top: 20px;background-color: hsl(357, 37%, 62%);font-size: 15px;padding: 5px;text-align: center;border: none;">Back to Profile</a></center>
 {% endblock %}

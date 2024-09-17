@@ -63,7 +63,7 @@
         <h2 class="text-center" style="background-color: #495057; height: 50px; text-align: center; padding: 10px; margin: auto">Dashboard</h2>
         <a href="{% url 'student_dashboard' %}">Dashboard</a>
         <a href="{% url 'indexs' %}">All Books</a>
-        <a href="{% url 'view_borrowed_books' %}">All Borrowed Books</a>
+        <a href="{% url 'borrowedbooks_for_std' %}">All Borrowed Books</a>
         <a href="{% url 'logout' %}">Logout</a>
     </div>
 
@@ -71,7 +71,7 @@
         <div class="topbar">
             <input type="text" class="form-control search-bar" placeholder="Search..." style="font-size: medium;">
             <div>
-                <span style="font-size: medium;">Welcome, {{ request.user.username }}</span>
+                <span style="font-size: medium;">Welcome, {{ request.user }}</span>
                 <a href="{%url 'student_profile'%}" class="btn btn-primary btn-sm" style="background-color: hsl(203, 30%, 26%);border: hsl(208, 7%, 46%); font-size: 15px;">Profile</a>
             </div>
         </div>

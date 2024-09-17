@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Book, BorrowRecord
+from .models import Book,S , BorrowRecord
 from .forms import BookForm
 from django.http import HttpResponseNotFound
 from .forms import StudentProfileForm, BorrowBookForm
-from spanel.models import Student
 
 def view_all_bookss(request):
     books = Book.objects.all()
@@ -16,32 +15,32 @@ def view_book_details(request, id):
     return render(request, "details.html", {"book": book_details})
 
 
+
+@login_required
 def borrow_book(request):
     if request.method == 'POST':
         form = BorrowBookForm(request.POST)
         if form.is_valid():
             book_name = form.cleaned_data['book'].name
             try:
-                # Ensure the book exists
                 book = Book.objects.get(name=book_name)
             except Book.DoesNotExist:
                 form.add_error(None, 'The selected book does not exist.')
                 return render(request, 'borrow.html', {'form': form})
 
             try:
-                # Ensure the student record exists for the current user
-                student = Student.objects.get(student_name=request.user)
-            except Student.DoesNotExist:
+                student = S.objects.get(student_name=request.user)
+            except S.DoesNotExist:
                 form.add_error(None, 'Student record not found.')
                 return render(request, 'borrow.html', {'form': form})
 
             if book.available:
-                # Create the BorrowRecord entry
+
                 BorrowRecord.objects.create(student=student, book=book)
                 book.available = False
                 book.save()
                 url = reverse('indexs')
-                return redirect(url)  # Redirect to a success page or message
+                return redirect(url)
             else:
                 form.add_error(None, 'This book is not available for borrowing.')
 
@@ -50,17 +49,17 @@ def borrow_book(request):
 
     return render(request, 'borrow.html', {'form': form})
 
-
 @login_required
 def student_profile(request):
     try:
         request.user.refresh_from_db()
-        student = Student.objects.get(student_name=request.user)
-    except Student.DoesNotExist:
+        student = S.objects.get(user=request.user)
+    except S.DoesNotExist:
         return HttpResponseNotFound('Student profile does not exist.')
 
-    borrow_records = BorrowRecord.objects.filter(student=student)
+    print("Student:", student)
 
+    borrow_records = BorrowRecord.objects.filter(student=student)
     return render(request, 'student_profile.html', {
         'student': student,
         'borrow_records': borrow_records
@@ -69,7 +68,7 @@ def student_profile(request):
 
 @login_required
 def update_student_profile(request):
-    student = Student.objects.get(student_name=request.user)
+    student = S.objects.get(user=request.user)
 
     if request.method == 'POST':
         form = StudentProfileForm(request.POST, instance=student)
@@ -145,9 +144,6 @@ def add_new_book(request):
             url = reverse("books.all_books")
             return redirect(url)
     return render(request, 'books/add_new_book.html', {"form": form})
-
-
-
 
 
 # Create your views here.

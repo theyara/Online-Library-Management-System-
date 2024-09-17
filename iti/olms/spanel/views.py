@@ -5,6 +5,12 @@ from django.contrib import messages
 from .models import Student
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
+from library.models import BorrowRecord
+
+
+def borrowed_books_for_std(request):
+    borrowed_books = BorrowRecord.objects.select_related('book').all()
+    return render(request, 'borrowed_books_for_std.html', {'borrowed_books': borrowed_books})
 
 
 def register_student(request):
@@ -39,7 +45,6 @@ def student_login(request):
             return redirect('student_login')
 
     return render(request, 'accounts/student_login.html')
-
 
 @login_required
 def student_dashboard(request):

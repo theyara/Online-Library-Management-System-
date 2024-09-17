@@ -1,0 +1,31 @@
+{% extends "student_dashboard.html" %}
+{% block main%}
+<h1 class="h2 section-title has-underline" style="font-size: 25px; margin: 50px;margin-top: 20px; font-weight: bolder">Borrowed Books</h1>
+        <center>
+
+
+        <table class="table table-success table-striped" style="border: 2px;border-radius: 20px;width: 70%;height: 20%;">
+            <thead>
+            <tr>
+              <th scope="col">Book Title</th>
+              <th scope="col">Author</th>
+                <th scope="col">Borrowed At</th>
+                <th scope="col">Returned At</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for record in borrowed_books %}
+            <tr>
+              <td>{{ record.book.name }}</td>
+                <td>{{ record.book.author }}</td>
+                <td>{{ record.borrowed_at }}</td>
+                <td>{{ record.returned_at|default:"Not Returned Yet" }}</td>
+            </tr>
+
+        {% empty %}
+            <h1 class="h2 section-title has-underline" style="font-size: 25px; margin-top: 20px; font-weight: bolder">No borrowed books found</h1>
+        {% endfor %}
+        </tbody>
+        </table>
+        </center>
+{% endblock %}

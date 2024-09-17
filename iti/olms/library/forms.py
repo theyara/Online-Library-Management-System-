@@ -1,15 +1,20 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Book, Category
-from .models import BorrowRecord
-from  spanel.models import Student
+from .models import Book, Category , S , BorrowRecord
+
+
+
+
+
+
+
 
 
 class BorrowBookForm(forms.ModelForm):
     book = forms.ModelChoiceField(
         queryset=Book.objects.all(),
-        to_field_name='name',  # Use book name for selection
+        to_field_name='name',
         label='Select Book'
     )
 
@@ -20,13 +25,13 @@ class BorrowBookForm(forms.ModelForm):
 
 class StudentProfileForm(forms.ModelForm):
     class Meta:
-        model = Student
+        model = S
         fields = '__all__'
 
 class BorrowRecordForm(forms.ModelForm):
     class Meta:
         model = BorrowRecord
-        fields = []
+        fields = '__all__'
 
 
 class BookForm(forms.ModelForm):
